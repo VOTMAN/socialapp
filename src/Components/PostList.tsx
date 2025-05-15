@@ -3,27 +3,47 @@
 import { UserContext } from "@/Contexts/UserContext";
 import { useContext, useEffect, useState } from "react";
 import Post from "./Post";
-import getPosts from "@/utils/getPosts";
-import getUserPosts from "@/utils/getUserPosts";
+import { getAllPosts, getUserPosts } from "@/utils/post";
+import { getPostLikes, getUserLikes } from "@/utils/like";
 
 const PostList = ({ type }: { type: string }) => {
   const user = useContext(UserContext);
-  console.log(user);
   const [userPosts, setUserPosts] = useState<
     {
+      id: string;
       user: string | null;
       content: string;
       image?: string;
       time: Date | null;
     }[]
   >([]);
-
+  const [postsLiked, setPostsLiked] = useState<{ postId: string | null }[]>([]);
+  const [likedCount, setLikedCount] = useState<
+    { postId: string; likes: number }[] | undefined
+  >([]);
   useEffect(() => {
+    const fetchUserLikes = async () => {
+      const res = await getUserLikes(user?.user?.id!);
+      if (res?.success) {
+        const liked = res.data.map((l) => ({
+          postId: l.postId ?? "",
+        }));
+        setPostsLiked(liked);
+      }
+    };
+    fetchUserLikes();
+
+    const fetchLikeCount = async () => {
+      const res = await getPostLikes();
+      setLikedCount(res.data);
+    };
+    fetchLikeCount();
     if (type == "all") {
       const fetchUserPosts = async () => {
-        const res = await getPosts();
+        const res = await getAllPosts();
         if (res.success && res.data != undefined) {
           const newPosts = res.data.map((p) => ({
+            id: p.post.id ?? "",
             user: p.user?.name ?? "",
             content: p.post.content ?? "",
             image: p.post.imageUrl ?? undefined,
@@ -39,6 +59,7 @@ const PostList = ({ type }: { type: string }) => {
         const res = await getUserPosts(userId);
         if (res.success && res.data != undefined) {
           const newPosts = res.data.map((p) => ({
+            id: p.id ?? "",
             user: user?.user?.name ?? "",
             content: p.content ?? "",
             image: p.imageUrl ?? undefined,
@@ -52,7 +73,7 @@ const PostList = ({ type }: { type: string }) => {
         fetchUserPosts(user.user.id);
       }
     }
-  }, [user]);
+  }, [user?.user]);
 
   return (
     <div>
@@ -63,11 +84,16 @@ const PostList = ({ type }: { type: string }) => {
           </h4>
           {userPosts.map((p, index) => (
             <Post
+              id={p.id}
               user={p.user || ""}
               key={index}
               content={p.content}
               imageId={p.image ? p.image : null}
               time={p.time ? p.time : null}
+              liked={postsLiked.some((likedPost) => likedPost.postId === p.id)}
+              likedCount={
+                likedCount?.find((like) => like.postId === p.id)?.likes || 0
+              }
             />
           ))}
         </div>

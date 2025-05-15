@@ -1,7 +1,6 @@
 "use client";
 
 import { UserContext } from "@/Contexts/UserContext";
-import { authClient } from "@/utils/auth-client";
 import makePost from "@/utils/makePost";
 import { CldUploadWidget } from "next-cloudinary";
 import { redirect } from "next/navigation";
@@ -31,7 +30,8 @@ const NewPost = () => {
 
       if (d.success) {
         alert("Posted");
-        redirect("/dashboard")
+        console.log(d)
+        // redirect("/dashboard")
       }
     }
   };

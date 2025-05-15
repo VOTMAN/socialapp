@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useContext } from "react";
+import { Suspense, useContext } from "react";
 import PostList from "@/Components/PostList";
 import { UserContext } from "@/Contexts/UserContext";
 
@@ -22,7 +22,9 @@ const Dashboard = () => {
           </button>
         </Link>
       </div>
-      {data?.user && <PostList type={data.user.id} />}
+      <Suspense fallback="Loading the posts...">
+        {data?.user && <PostList type={data.user.id} />}
+      </Suspense>
     </div>
   );
 };

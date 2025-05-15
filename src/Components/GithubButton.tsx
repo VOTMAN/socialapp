@@ -2,10 +2,15 @@ import { authClient } from "@/utils/auth-client";
 import Image from "next/image";
 import Link from "next/link";
 
-const GithubButton = ({ data }: any) => {
-  console.log("BTN", data);
+interface GithubButtonProps {
+  id: string | null;
+  image: string;
+}
+
+const GithubButton = ({ id, image }: GithubButtonProps) => {
+  // console.log("BTN", data);
   const signIn = async () => {
-    const res = await authClient.signIn.social({
+    await authClient.signIn.social({
       provider: "github",
       callbackURL: "/dashboard",
     });
@@ -13,18 +18,18 @@ const GithubButton = ({ data }: any) => {
   };
   return (
     <div className="flex gap-5 items-center">
-      {data == null ? (
+      {id == null ? (
         <div>
           <button className="cursor-pointer" onClick={signIn}>
             Sign In
           </button>
         </div>
       ) : null}
-      {data != null ? (
+      {id != null ? (
         <div>
           <Link href="/dashboard">
             <Image
-              src={data.image}
+              src={image}
               alt="User Image and Dashboard"
               width={50}
               height={50}
@@ -32,7 +37,7 @@ const GithubButton = ({ data }: any) => {
             />
           </Link>
 
-          {data.user == null && (
+          {id != null && (
             <button
               onClick={async () => {
                 await authClient.signOut();

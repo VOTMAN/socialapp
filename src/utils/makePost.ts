@@ -14,11 +14,10 @@ export default async function makePost(post: string, userData: User, imageId?: s
   };
 
   try {
-    const res = await db.insert(postTable).values(postObj);
-    console.log(res, postObj)
+    await db.insert(postTable).values(postObj);
     return {success: true, data: postObj};
-  } catch (error) {
-    console.error("Failed to insert post:", error);
-    return {success: false, data: null};
+  } catch (e) {
+    // console.error("Failed to insert post:", error);
+    return {success: false, error: e}
   }
 }
