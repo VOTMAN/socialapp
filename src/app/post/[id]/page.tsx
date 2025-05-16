@@ -6,7 +6,7 @@ import { getPostById } from "@/utils/post";
 import { useEffect, useState } from "react";
 import CommentList from "@/Components/CommentList";
 
-const postPage = () => {
+const PostPage = () => {
   const { id } = useParams();
 
   const [postData, setPostData] = useState<
@@ -34,26 +34,25 @@ const postPage = () => {
         });
       } else {
         console.error(error);
+        redirect("/")
       }
     };
     fetchPostDetails();
-  }, []);
+  }, [id]);
 
   return (
     <>
       <Post
         id={id as string}
-        user={postData?.name!}
-        content={postData?.content!}
-        imageId={postData?.imageUrl!}
-        time={postData?.createdAt!}
+        user={postData?.name as string}
+        content={postData?.content as string}
+        imageId={postData?.imageUrl as string}
+        time={postData?.createdAt as Date}
         liked={null!}
         likedCount={undefined!}
       />
-      <div>
-        <CommentList />
-      </div>
+        <CommentList pId={id as string} />
     </>
   );
 };
-export default postPage;
+export default PostPage;

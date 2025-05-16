@@ -8,6 +8,7 @@ import { getPostLikes, getUserLikes } from "@/utils/like";
 
 const PostList = ({ type }: { type: string }) => {
   const user = useContext(UserContext);
+
   const [userPosts, setUserPosts] = useState<
     {
       id: string;
@@ -23,7 +24,7 @@ const PostList = ({ type }: { type: string }) => {
   >([]);
   useEffect(() => {
     const fetchUserLikes = async () => {
-      const res = await getUserLikes(user?.user?.id!);
+      const res = await getUserLikes(user?.user?.id ?? "");
       if (res?.success) {
         const liked = res.data.map((l) => ({
           postId: l.postId ?? "",
@@ -50,7 +51,7 @@ const PostList = ({ type }: { type: string }) => {
             time: p.post.createdAt,
           }));
           setUserPosts(newPosts);
-          console.log(userPosts);
+          // console.log(userPosts);
         }
       };
       fetchUserPosts();
@@ -66,14 +67,14 @@ const PostList = ({ type }: { type: string }) => {
             time: p.createdAt,
           }));
           setUserPosts(newPosts);
-          console.log(userPosts);
+          // console.log(userPosts);
         }
       };
       if (user?.user?.id !== null && user?.user?.id !== undefined) {
         fetchUserPosts(user.user.id);
       }
     }
-  }, [user?.user]);
+  }, [type]);
 
   return (
     <div>

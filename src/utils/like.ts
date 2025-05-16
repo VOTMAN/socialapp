@@ -35,9 +35,9 @@ export async function getUserLikes(userId: string) {
 }
 
 
-export async function getPostStatus(postId: string) {
+// export async function getPostStatus(postId: string) {
   
-}
+// }
 
 ///------------------------------------------------------------------
 
@@ -55,13 +55,13 @@ export async function likePost(likingUserId: string, pId: string) {
     if (check) {
       return { success: false, error: "Already Liked" };
     } else {
-      const res = await db.insert(likeTable).values(likeObj);
-      console.log(res);
+      await db.insert(likeTable).values(likeObj);
+      // console.log(res);
       return { success: true, message: "Post liked successfully" };
     }
   } catch (e) {
-    console.log(e);
-    return { success: false, error: "Failed to like post" };
+    // console.log(e);
+    return { success: false, error: e };
   }
 }
 
@@ -74,14 +74,15 @@ export async function dislikePost(likingUserId: string, pId: string) {
     if (!check) {
       return { success: false, error: "Not liked yet" };
     } else {
-      const res = await db
+      await db
         .delete(likeTable)
         .where(
           and(eq(likeTable.postId, pId), eq(likeTable.userId, likingUserId))
         );
-      console.log(res);
+      // console.log(res);
+      return {success: true}
     }
   } catch (e) {
-    console.log(e);
+    return {success: false, error: e}
   }
 }

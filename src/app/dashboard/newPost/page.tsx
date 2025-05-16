@@ -30,8 +30,8 @@ const NewPost = () => {
 
       if (d.success) {
         alert("Posted");
-        console.log(d)
-        // redirect("/dashboard")
+        // console.log(d)
+        redirect("/dashboard")
       }
     }
   };
