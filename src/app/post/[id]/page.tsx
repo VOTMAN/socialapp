@@ -45,6 +45,7 @@ const PostPage = () => {
       <Post
         id={id as string}
         user={postData?.name as string}
+        userId={""}
         content={postData?.content as string}
         imageId={postData?.imageUrl as string}
         time={postData?.createdAt as Date}

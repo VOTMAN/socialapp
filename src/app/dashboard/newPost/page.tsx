@@ -14,7 +14,7 @@ const NewPost = () => {
     if (res?.user == null) {
       alert("Login to access this page");
       redirect("/dashboard")
-    }  
+    }
   }, [res])
 
   const handleSubmit = async (imageInfo?: string) => {

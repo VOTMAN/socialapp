@@ -29,6 +29,7 @@ import { DialogClose } from "@radix-ui/react-dialog";
 const Post = (data: {
   id: string;
   user: string;
+  userId: string;
   content: string;
   imageId: string | null;
   time: Date | null;
@@ -72,9 +73,16 @@ const Post = (data: {
   return (
     <div className="flex flex-col justify-center align-middle min-w-fit border-amber-200 border p-5 my-7 gap-5">
       <div className="flex justify-around">
-        <p>{data.user}</p>
-        <p>{data.time?.toTimeString() + " - " + data.time?.toDateString()}</p>
-      </div>
+      <Link href={`/dashboard/${data.userId}`}>
+    <span className="hover:underline font-semibold text-indigo-300">
+      {data.user}
+    </span>
+  </Link>
+  <p className="text-sm text-gray-400">
+    {data.time?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} •{" "}
+    {data.time?.toLocaleDateString()}
+  </p>
+</div>
       <hr />
       <p>{data.content}</p>
       <hr />

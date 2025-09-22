@@ -13,6 +13,7 @@ const PostList = ({ type }: { type: string }) => {
     {
       id: string;
       user: string | null;
+      userId: string | null;
       content: string;
       image?: string;
       time: Date | null;
@@ -46,6 +47,7 @@ const PostList = ({ type }: { type: string }) => {
           const newPosts = res.data.map((p) => ({
             id: p.post.id ?? "",
             user: p.user?.name ?? "",
+            userId: p.user?.id ?? "",
             content: p.post.content ?? "",
             image: p.post.imageUrl ?? undefined,
             time: p.post.createdAt,
@@ -60,11 +62,12 @@ const PostList = ({ type }: { type: string }) => {
         const res = await getUserPosts(userId);
         if (res.success && res.data != undefined) {
           const newPosts = res.data.map((p) => ({
-            id: p.id ?? "",
-            user: user?.user?.name ?? "",
-            content: p.content ?? "",
-            image: p.imageUrl ?? undefined,
-            time: p.createdAt,
+            id: p.post.id ?? "",
+            user: p.user?.name ?? "",
+            userId: p.user?.id ?? "",
+            content: p.post.content ?? "",
+            image: p.post.imageUrl ?? undefined,
+            time: p.post.createdAt,
           }));
           setUserPosts(newPosts);
           // console.log(userPosts);
@@ -87,6 +90,7 @@ const PostList = ({ type }: { type: string }) => {
             <Post
               id={p.id}
               user={p.user || ""}
+              userId={p.userId || ""}
               key={index}
               content={p.content}
               imageId={p.image ? p.image : null}

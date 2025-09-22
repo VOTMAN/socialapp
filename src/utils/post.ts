@@ -16,14 +16,16 @@ export async function getAllPosts() {
     return { success: false, error: e };
   }
 }
+
 export async function getUserPosts(user_id: string) {
   try {
     const res = await db
       .select()
       .from(postTable)
+      .leftJoin(userTable, eq(postTable.userId, userTable.id)) // add this
       .where(eq(postTable.userId, user_id))
       .orderBy(desc(postTable.createdAt));
-    // console.log(res)
+
     return { success: true, data: res };
   } catch (e) {
     return { success: false, error: e };
