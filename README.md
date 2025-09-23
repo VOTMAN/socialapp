@@ -1,7 +1,7 @@
-🗣️ Social App
+# Social App
 Social App is a minimalistic social media platform built with Next.js. Share your thoughts with or without images, interact with others through likes and comments, and view posts globally or just your own in the dashboard.
 
-✨ Features
+### Features
 - OAuth login with GitHub (via Better Auth)
 
 - Create posts with text and optional image
@@ -16,7 +16,7 @@ Social App is a minimalistic social media platform built with Next.js. Share you
 
 - Fully responsive UI with TailwindCSS & shadCN components
 
-🛠️ Tech Stack
+### Tech Stack
 - Purpose	Technology
 - Frontend	Next.js, React, TailwindCSS, shadCN
 - Backend	Next.js Server Actions
@@ -25,7 +25,7 @@ Social App is a minimalistic social media platform built with Next.js. Share you
 - Image Uploads	Cloudinary
 - Hosting	Vercel
 
-🧑‍💻 Getting Started
+### Getting Started
 1. Clone the repository
 ```
 git clone https://github.com/your-username/social-app.git
