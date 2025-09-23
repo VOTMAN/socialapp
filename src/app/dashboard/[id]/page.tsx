@@ -11,7 +11,7 @@ type Props = {
 export default async function UserProfile({ params }: Props) {
   const { id } = await params;
 
-  const userRes = await getUserById(id);
+  const userRes = await getUserById(id)
   if (!userRes.success || !userRes.data) {
     return (
       <div className="text-center mt-10 text-red-400">User not found</div>
