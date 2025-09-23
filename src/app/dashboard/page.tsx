@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Suspense, useContext } from "react";
 import PostList from "@/Components/PostList";
 import { UserContext } from "@/Contexts/UserContext";
+import Image from "next/image";
 
 const Dashboard = () => {
   const data = useContext(UserContext);
@@ -16,7 +17,9 @@ const Dashboard = () => {
           <div className="flex flex-col items-center gap-4">
             {/* Profile image */}
             {data.user.image ? (
-              <img
+              <Image
+                width={96}
+                height={96}
                 src={data.user.image}
                 alt={data.user.name}
                 className="w-24 h-24 rounded-full object-cover border-4 border-indigo-300"

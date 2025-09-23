@@ -8,7 +8,7 @@ const About = () => {
       <div className="text-center">
         <h1 className="text-4xl font-bold text-indigo-100 mb-4">About Social App</h1>
         <p className="text-indigo-200 text-lg">
-          Social App is a simple and interactive platform where users can share their thoughts, post images, like posts, and comment on others' ideas. Our goal is to make social interaction easy, fun, and meaningful.
+          Social App is a simple and interactive platform where users can share their thoughts, post images, like posts, and comment on others&apos; ideas. Our goal is to make social interaction easy, fun, and meaningful.
         </p>
       </div>
 

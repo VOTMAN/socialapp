@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <nav className="flex gap-5 justify-between items-center p-6 border-b border-b-blue-400 my-5">
       <div className="flex items-center align-middle gap-4">
-        <span className="hover:underline underline-offset-4"><Link href="/">Wrong</Link></span>
+        <span className="hover:underline underline-offset-4"><Link href="/">Home</Link></span>
           <Link href="/about" className="hover:underline underline-offset-4">About</Link>
       </div>
       <div>

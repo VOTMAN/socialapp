@@ -1,15 +1,17 @@
 import { getUserById } from "@/utils/getUserById";
 import { getUserPosts } from "@/utils/post";
 import Post from "@/Components/Post";
-import { getUserLikes, getPostLikes } from "@/utils/like"; // add this if you want likes
+import { getPostLikes } from "@/utils/like";
+import Image from "next/image";
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export default async function UserProfile({ params }: Props) {
-  // Fetch user info
-  const userRes = await getUserById(params.id);
+  const { id } = await params;
+
+  const userRes = await getUserById(id);
   if (!userRes.success || !userRes.data) {
     return (
       <div className="text-center mt-10 text-red-400">User not found</div>
@@ -18,7 +20,7 @@ export default async function UserProfile({ params }: Props) {
   const user = userRes.data;
 
   // Fetch user posts
-  const postsRes = await getUserPosts(params.id);
+  const postsRes = await getUserPosts(id);
   const posts = postsRes.success && postsRes.data ? postsRes.data : [];
 
   // Fetch like counts for all posts
@@ -31,7 +33,9 @@ export default async function UserProfile({ params }: Props) {
       <div className="bg-white/10 p-6 rounded-2xl shadow-lg border border-white/20">
         <div className="flex flex-col items-center gap-4">
           {user.image ? (
-            <img
+            <Image
+              width={96}
+              height={96}
               src={user.image}
               alt={user.name}
               className="w-24 h-24 rounded-full object-cover border-4 border-indigo-300"
@@ -71,7 +75,7 @@ export default async function UserProfile({ params }: Props) {
       {/* User posts */}
       <div>
         <h3 className="text-2xl font-semibold text-indigo-100 mb-6 text-center">
-          {user.name}'s Posts
+          {user.name}&apos;s Posts
         </h3>
 
         {posts.length > 0 ? (
@@ -87,7 +91,7 @@ export default async function UserProfile({ params }: Props) {
                 time={p.post.createdAt ?? null}
                 liked={false}
                 likedCount={
-                  likeCounts?.find((like: any) => like.postId === p.post.id)?.likes || 0
+                  likeCounts?.find((like) => like.postId === p.post.id)?.likes || 0
                 }
               />
             ))}

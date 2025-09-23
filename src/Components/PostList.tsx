@@ -77,7 +77,7 @@ const PostList = ({ type }: { type: string }) => {
         fetchUserPosts(user.user.id);
       }
     }
-  }, [type]);
+  }, [user?.user?.id, type]);
 
   return (
     <div>
@@ -94,7 +94,7 @@ const PostList = ({ type }: { type: string }) => {
               key={index}
               content={p.content}
               imageId={p.image ? p.image : null}
-              time={p.time ? p.time : null}
+              time={p.time}
               liked={postsLiked.some((likedPost) => likedPost.postId === p.id)}
               likedCount={
                 likedCount?.find((like) => like.postId === p.id)?.likes || 0
